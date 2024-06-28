@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
-            'password' => 'required',
+            'password' => 'required|string|min:8'
         ]);
 
         if ($validator->fails()) {
@@ -22,12 +22,8 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-             // Clear the registered email from the session
-           session()->forget('registered_email');
             $token = $user->createToken('AppName')->accessToken;
           //  return response()->json($token,200);
-
-
             return redirect()->intended('/home')->with('success', 'Login successful!'); // Redirect to desired location after login
         }
 

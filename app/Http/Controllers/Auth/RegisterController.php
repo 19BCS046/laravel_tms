@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -21,7 +22,6 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'confirm_password'=>'required|same:password'
-
         ]);
 
         if ($validator->fails()) {
@@ -39,6 +39,11 @@ class RegisterController extends Controller
         // Create a token for the user
          $token = $user->createToken('AppName')->accessToken;
         // return response()->json(['token' => $token], 201);
+        Mail::send('email.register', [], function($message) use($request) {
+            $message->to($request->input('email'));
+            $message->subject('Registered Successfully in PeruZ Tours');
+        });
+
          return redirect()->back()->with('success', 'Registration successful!');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
@@ -31,4 +32,11 @@ Route::get('login', function() {
     return view('login');
 })->name('login');
 Route::post('login', [LoginController::class, 'login']);
+//forgot password
+Route::get('forgot_password',[ForgotPasswordController::class,'showForgotPasswordForm'])->name('forgot.password.get');
+Route::post('forgot-password',[ForgotPasswordController::class,'submitForgotPasswordForm'])->name('forgot.password.post');
+Route::get('reset-password/{token}',[ForgotPasswordController::class,'showResetPasswordForm'])->name('reset.forgot.get');
+Route::post('reset-password',[ForgotPasswordController::class,'submitResetPasswordForm'])->name('reset.forgot.post');
+
+
 

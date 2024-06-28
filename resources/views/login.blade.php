@@ -6,40 +6,71 @@
     <title>Login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+      body {
+            height: 100vh; /* Ensure full viewport height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .custom_font,.log_btn{
+        font-size: 20px;
+    }
+    .login{
+        font-size: 20px;
+        margin-top: 20px;
+    }
+
+</style>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 login">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Login</div>
+                    <button type="button" class="log_btn btn btn-secondary btn-lg">Login</button>
                     <div class="card-body">
+                        @if(Session::has('message'))
+                        <div class="alert alert-success">
+                            {{ Session::get('message') }}
+                        </div>
+                    @endif
+
                         @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif
                         @if(session('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger text-danger">
                                 {{ session('error') }}
                             </div>
                         @endif
-                        <form method="POST" action="{{ url('api/login') }}">
+                        <form method="POST" action="{{ route('login') }}" autocomplete="off">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', session('registered_email')) }}">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" autocomplete="off">
                                 @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" autocomplete="new-password">
                                 @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="form-group text-md-end">
+                                <!-- Simple link -->
+                                <a href="{{route('forgot.password.get')}}">Forgot password?</a>
+                              </div>
+                            <div class="d-grid gap-2 col-3 mx-auto">
+                            <button type="submit" class="log_btn btn btn-primary text-center btn-lg">Login</button>
+                        </div>
+                        <div class="form-group text-center mt-4">
+                            <p class="custom_font">Not a member? <a href="{{url('register')}}">Register</a></p>
+                        </div>
                         </form>
                     </div>
                 </div>
