@@ -24,6 +24,9 @@ class LoginController extends Controller
             $user = Auth::user();
             $token = $user->createToken('AppName')->accessToken;
           //  return response()->json($token,200);
+          if ($user->isAdmin()) {
+            return redirect()->intended('/admin')->with('success', 'Login successful as Admin!');
+        }
             return redirect()->intended('/home')->with('success', 'Login successful!'); // Redirect to desired location after login
         }
 
@@ -33,6 +36,17 @@ class LoginController extends Controller
         $user=Auth::user();
         $response['user']=$user;
         return response()->json($response,200);
+    }
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+        return redirect('/');
+        // return redirect()->route('mycart')->with('success','Booking Successful!');
+
+    }
+    public function userDashboard(){
+        return view('/home');
     }
 }
 

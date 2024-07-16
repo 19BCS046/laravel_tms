@@ -17,12 +17,22 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+     //   $validator=$request->all();
+        $validator['phone']='';
+        $validator['city']='';
+        $validator['address']='';
+        $validator['lastname']='';
+
          $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'confirm_password'=>'required|same:password'
-        ]);
+            'confirm_password'=>'required|same:password',
+            'lastname'=>'required|string',
+            'city'=>'required|string',
+            'address'=>'required|string',
+            'phone'=>'required|string|max:10'
+            ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -33,6 +43,10 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'lastname' => $request->lastname,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'address' => $request->address,
         ]);
 
 

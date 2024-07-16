@@ -27,7 +27,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <button type="button" class="log_btn btn btn-secondary btn-lg">Login</button>
+                    <button type="button" class="log_btn btn btn-secondary btn-lg">{{__('msg.login')}}</button>
                     <div class="card-body">
                         @if(Session::has('message'))
                         <div class="alert alert-success">
@@ -48,14 +48,14 @@
                         <form method="POST" action="{{ route('login') }}" autocomplete="off">
                             @csrf
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{__('msg.email')}}</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" autocomplete="off">
                                 @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">{{__('msg.password')}}</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" autocomplete="new-password">
                                 @error('password')
                                 <div class="text-danger">{{ $message }}</div>
@@ -63,13 +63,13 @@
                             </div>
                             <div class="form-group text-md-end">
                                 <!-- Simple link -->
-                                <a href="{{route('forgot.password.get')}}">Forgot password?</a>
+                                <a href="{{route('forgot.password.get')}}">{{__('msg.forgot')}}?</a>
                               </div>
                             <div class="d-grid gap-2 col-3 mx-auto">
-                            <button type="submit" class="log_btn btn btn-primary text-center btn-lg">Login</button>
+                            <button type="submit" class="log_btn btn btn-primary text-center btn-lg">{{__('msg.login')}}</button>
                         </div>
                         <div class="form-group text-center mt-4">
-                            <p class="custom_font">Not a member? <a href="{{url('register')}}">Register</a></p>
+                            <p class="custom_font">{{__('msg.member')}}? <a href="{{url('register')}}">{{__('msg.register')}}</a></p>
                         </div>
                         </form>
                     </div>

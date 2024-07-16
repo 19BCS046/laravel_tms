@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,6 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'lastname',
+        'city',
+        'address',
+        'phone',
     ];
 
     /**
@@ -41,4 +44,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function isAdmin()
+    {
+        $adminEmails = [
+            'perumalshanmugam2002@gmail.com',
+            'sampleperu125@gmail.com'
+        ];
+
+        return in_array($this->email, $adminEmails);
+    }
 }

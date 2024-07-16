@@ -1,14 +1,14 @@
-@include('includes.home')
+@include('includes.navbar')
  <section id="hero" class="section hero">
 
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h1>Bettter digital experience with Ninestars</h1>
-            <p>We are team of talented designers making websites with Bootstrap</p>
+            <h1>{{__('msg.head')}}</h1>
+            <p>{{__('msg.para')}}</p>
             <div class="d-flex">
-              <a href="index.html#about" class="btn-get-started">Get Started</a>
-              <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+              <a href="{{url('login')}}" class="btn-get-started">{{__('msg.getstart')}}</a>
+              <a href="https://www.youtube.com/watch?v=wNC-5VrLXjw" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>{{__('msg.watch')}}</span></a>
             </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img">
