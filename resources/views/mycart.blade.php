@@ -9,14 +9,14 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2>My Bookings</h2>
+        <h2>{{__('msg.mybook')}}</h2>
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
         @if($bookings->isEmpty())
-            <p>No bookings found.</p>
+            <p>{{__('msg.nobook')}}.</p>
         @else
             <div class="row">
                 @foreach($bookings as $booking)
@@ -26,10 +26,10 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ $booking->cart->title }}</h5>
                                 <p class="card-text"><i class="bi bi-geo-alt-fill"></i> {{ $booking->cart->location }}</p>
-                                <p class="card-text">From: {{ $booking->cart->from }} To: {{ $booking->cart->to }}</p>
-                                <p class="card-text">Vehicle Type: {{ $booking->cart->vehicle }}</p>
-                                <p class="card-text">Ratings: {{ $booking->cart->rating }}/5</p>
-                                <p class="card-text">Package: &#8377; {{ $booking->cart->cost }}</p>
+                                <p class="card-text">{{__('msg.from')}}: {{ $booking->cart->from }} {{__('msg.to')}}: {{ $booking->cart->to }}</p>
+                                <p class="card-text">{{__('msg.vehicletype')}}: {{ $booking->cart->vehicle }}</p>
+                                <p class="card-text">{{__('msg.rating')}}: {{ $booking->cart->rating }}/5</p>
+                                <p class="card-text">{{__('msg.package')}}: &#8377; {{ $booking->cart->cost }}</p>
                                 <p class="card-text">{{ $booking->cart->overview }}</p>
                             </div>
                         </div>

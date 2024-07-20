@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Session;
 
 //opening page
 Route::get('/', function () {
-    return view('home');
+    return view('includes.log_home');
 });
 
 //login page
@@ -83,7 +83,9 @@ Route::middleware('auth')->get('dashboard',[DashboardController::class,'admin'])
 
 //users
 Route::middleware('auth')->get('users',[UserController::class,'adminUser'])->name('adminUser');
-Route::post('deleteUser/{id}',[UserController::class,'deleteUser'])->name('deleteUser');
+Route::middleware('auth')->get('searchuser',[UserController::class,'searchUser'])->name('searchuser');
+//deleteuser
+Route::middleware('auth')->get('deleteUser/{id}',[UserController::class,'deleteUser'])->name('deleteUser');
 
 // carts/viewcart/editcart/addcart
 Route::middleware('auth')->get('cartadmin',[CartadminController::class,'cartadmin'])->name('cartadmin');
@@ -95,7 +97,7 @@ Route::middleware('auth')->post('viewcart/{id}', [CartadminController::class, 'v
 Route::middleware('auth')->get('editdata/{id}', [CartadminController::class, 'editdata'])->name('editdata');
 Route::middleware('auth')->post('updatecart/{id}', [CartadminController::class, 'updatecart'])->name('updatecart');
 //deletecart
-Route::middleware('auth')->post('deleteCart/{id}',[CartadminController::class,'deleteCart'])->name('deleteCart');
+Route::middleware('auth')->get('deleteCart/{id}',[CartadminController::class,'deleteCart'])->name('deleteCart');
 //addnewcart
 Route::middleware('auth')->get('addnewcart',[CartadminController::class,'addnewcart'])->name('addnewcart');
 Route::middleware('auth')->post('updatenewcart',[CartadminController::class,'updateNewCart'])->name('updatenewcart');
@@ -107,4 +109,4 @@ Route::middleware('auth')->get('searchbookedcart',[BookedCartsController::class,
 //view -Booked cart
 Route::middleware('auth')->post('bookedcartdetail/{id}',[BookedCartsController::class,'bookedCartDetails'])->name('bookedcartdetail');
 //delete-Booked Cart
-Route::middleware('auth')->post('deletebookedcart/{id}',[BookedCartsController::class,'deleteBookedCart'])->name('deletebookedcart');
+Route::middleware('auth')->get('deletebookedcart/{id}',[BookedCartsController::class,'deleteBookedCart'])->name('deletebookedcart');

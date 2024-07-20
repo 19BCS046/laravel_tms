@@ -6,7 +6,7 @@ return [
     'mycart' => 'My Cart',
     'language'=>'Language',
     'profile'=>'Profile',
-    'login'=>'login',
+    'login'=>'Login',
     'logout'=>'logout',
     'password'=>'Password',
     'confirm'=>'Confirm Password',
@@ -68,5 +68,16 @@ return [
     'from'=>'From',
     'to'=>'To',
     'delete'=>'Delete',
+    'updatecart'=>'Update Cart',
+    'view'=>'View',
+    'vehicletype'=>'Vehicle Type',
+    'nobook'=>'No Bookings Found',
+    'booknow'=>'Book Now',
+
+
+
+
+
+
 
 ];

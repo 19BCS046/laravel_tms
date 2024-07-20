@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>PeruZ</title>
+  <link href="{{asset('assets/img/l2.jfif')}}" rel="icon">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -62,7 +63,6 @@
                                 @enderror
                             </div>
                             <div class="form-group text-md-end">
-                                <!-- Simple link -->
                                 <a href="{{route('forgot.password.get')}}">{{__('msg.forgot')}}?</a>
                               </div>
                             <div class="d-grid gap-2 col-3 mx-auto">

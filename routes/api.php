@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CartadminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
@@ -24,4 +25,6 @@ Route::post('login', [LoginController::class, 'login']);
 Route::get('detail', [LoginController::class, 'detail'])
 ->middleware('auth:api');
 
+//admin
+Route::middleware('auth:sanctum')->get('cartadmin',[CartadminController::class,'cartadmin'])->name('cartadmin');
 

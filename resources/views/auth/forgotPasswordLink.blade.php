@@ -41,12 +41,12 @@
                                 {{ session('error') }}
                             </div>
                         @endif
-                        <form method="POST" action="{{ route('reset.forgot.post') }}">
+                        <form method="POST" action="{{ route('reset.forgot.post') }}" autocomplete="off">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" autocomplete="off">
                                 @if($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif

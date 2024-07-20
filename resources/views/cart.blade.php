@@ -35,7 +35,7 @@
                                 <i class="bi bi-star text-warning"></i>
                                 {{ $cart->rating }}/5
                             </p>
-                            <a href="{{ url('cartdetails/' . $cart->id) }}" class="btn btn-primary fs-5">View</a>
+                            <a href="{{ url('cartdetails/' . $cart->id) }}" class="btn btn-primary fs-5">{{__('msg.view')}}</a>
                         </div>
                     </div>
                 </div>

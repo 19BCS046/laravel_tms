@@ -68,11 +68,11 @@
                 </a>
             </div>
         </aside>
-{{-- navbar --}}
         <div class="main">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary px-4 py-3" data-bs-theme="medium dark">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary px-4 py-2" data-bs-theme="medium dark">
                 <form action="#" class="d-none d-sm-inline-block">
                     <div class="input-group input-group-navbar">
+                        <h3 class="fw-bold fs-3 mb-1">{{__('msg.admin')}}</h3>
                     </div>
                 </form>
                 <div class="navbar-collapse collapse">
@@ -120,6 +120,7 @@
                 </div>
             </nav>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -147,14 +148,12 @@
             const selectedIcon = document.getElementById('selectedIcon');
             const selectedLanguage = document.getElementById('selectedLanguage');
             selectedIcon.src = iconMap[currentLocale];
-          //  selectedLanguage.textContent = languageMap[currentLocale];
 
             const dropdownItems = document.querySelectorAll('.dropdown-item');
             dropdownItems.forEach(item => {
                 item.addEventListener('click', function (event) {
                     event.preventDefault();
                     selectedIcon.src = this.getAttribute('data-icon');
-                  //  selectedLanguage.textContent = this.getAttribute('data-lang');
                     window.location.href = this.href;
                 });
             });

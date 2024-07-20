@@ -17,7 +17,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-     //   $validator=$request->all();
         $validator['phone']='';
         $validator['city']='';
         $validator['address']='';
@@ -37,8 +36,6 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        // Create the user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -48,9 +45,6 @@ class RegisterController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
         ]);
-
-
-        // Create a token for the user
          $token = $user->createToken('AppName')->accessToken;
         // return response()->json(['token' => $token], 201);
         Mail::send('email.register', [], function($message) use($request) {

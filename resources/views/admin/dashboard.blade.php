@@ -15,7 +15,7 @@
             <main class="content px-3 py-4">
                 <div class="container-fluid">
                     <div class="mb-3">
-                        <h3 class="fw-bold fs-4 mb-3">{{__('msg.admin')}}</h3>
+                        <h3 class="fw-bold fs-4 mb-3"></h3>
                         <div class="row">
                             <div class="col-12 col-md-3">
                                 <div class="card border-0 navbar navbar-expand-lg bg-body-tertiary px-4 py-3" data-bs-theme="medium dark">
@@ -76,6 +76,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center center-container">
+                                <img src="https://imgscf.slidemembers.com/docs/1/1/736/admin_dashboard_735221.jpg" alt="" class="img-fluid">
                             </div>
 
         </div>

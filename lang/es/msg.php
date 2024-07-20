@@ -67,5 +67,10 @@ return [
         'from' => 'Desde',
         'to' => 'Hasta',
         'delete' => 'Eliminar',
+        'updatecart'=>'Actualizar Carrito',
+        'view'=>'Ver',
+        'vehicletype'=>'Tipo de Vehículo',
+        'nobook'=>'No se encontraron reservas',
+        'booknow'=>'Reservar ahora',
     ];
 

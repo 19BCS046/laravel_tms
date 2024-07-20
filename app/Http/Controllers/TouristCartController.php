@@ -16,18 +16,11 @@ class TouristCartController extends Controller
     // }
     public function touristCart()
     {
-       // return view('includes.home');
-        // Retrieve all tourist places from the 'carts' table
         $touristCart = Cart::paginate(6);
-
-        // Pass the data to the 'about' view
         return view('cart', compact('touristCart'));
     }
     public function cartDetails($id){
-            // Retrieve the specific cart item by ID
             $cart = Cart::findOrFail($id);
-
-            // Pass the data to a view (e.g., 'cartdetails')
             return view('cartdetails', compact('cart'));
     }
     public function search(Request $request){

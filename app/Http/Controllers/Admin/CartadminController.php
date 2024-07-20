@@ -9,18 +9,39 @@ use Illuminate\Http\Request;
 class CartadminController extends Controller
 {
     //tourist carts
-    public function cartadmin(){
-        $carts=Cart::paginate(6);
-        return view('admin.cartadmin',compact('carts'));
+    public function cartadmin(Request $request)
+    {
+        $carts = Cart::paginate(6);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $carts->items(),
+                'links' => $carts->links()->toHtml(),
+            ]);
+        }
+
+        return view('admin.cartadmin', compact('carts'));
     }
+
+
     //search the carts
-    public function search(Request $request){
-        $query=$request->input('search');
-        $carts=Cart::where('title','LIKE',"%{$query}%")
-        ->orWhere('location','LIKE',"%{$query}%")
-        ->paginate(6);
-        return view('admin.cartadmin',compact('carts','query'));
+    public function search(Request $request)
+    {
+        $query = $request->input('search');
+        $carts = Cart::where('title', 'LIKE', "%{$query}%")
+                     ->orWhere('location', 'LIKE', "%{$query}%")
+                     ->paginate(6);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $carts->items(),
+                'links' => $carts->links()->toHtml(),
+            ]);
+        }
+
+        return view('cartadmin', compact('carts'));
     }
+
     //view the cart
     public function viewcart($id){
         $cart = Cart::findOrFail($id);

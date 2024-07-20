@@ -1,4 +1,4 @@
-@include('includes.navbar')
+@include('includes.homenavbar')
  <section id="hero" class="section hero">
 
       <div class="container">

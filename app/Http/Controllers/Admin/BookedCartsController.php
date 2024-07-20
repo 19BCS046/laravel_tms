@@ -9,34 +9,54 @@ use Illuminate\Http\Request;
 
 class BookedCartsController extends Controller
 {
-    //search the booked cart
+    // Search the booked cart
+    public function search(Request $request)
+    {
+        $query = $request->input('search');
+        $carts = Booking::where('username', 'LIKE', "%{$query}%")
+                    ->orWhere('title', 'LIKE', "%{$query}%")
+                    ->orWhere('location', 'LIKE', "%{$query}%")
+                    ->orWhere('status', 'LIKE', "%{$query}%")
+                    ->paginate(6);
 
-    //booked cart table
-    public function bookedCart(){
-        $carts=Booking::paginate(6);
-        return view('admin.bookedcarts',compact('carts'));
+    if ($request->ajax()) {
+        return response()->json([
+            'data' => $carts->items(),
+            'links' => $carts->links()->toHtml(),
+        ]);
     }
-    //view the booked cart
-    public function bookedCartDetails($id){
+        return view('admin.bookedcarts', compact('carts', 'query'));
+    }
+
+    // Booked cart table
+    public function bookedCart(Request $request)
+    {
+        $carts = Booking::paginate(6);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $carts->items(),
+                'links' => $carts->links()->toHtml(),
+            ]);
+        }
+        return view('admin.bookedcarts', compact('carts'));
+    }
+
+    // View the booked cart
+    public function bookedCartDetails($id)
+    {
         $cart = Cart::findOrFail($id);
         return view('admin.viewcart', compact('cart'));
-
     }
-    //delete the booked cart
-    public function deleteBookedCart($id){
+
+    // Delete the booked cart
+    public function deleteBookedCart($id)
+    {
         $booking = Booking::find($id);
-        if ($booking->delete()) {
+        if ( $booking->delete()) {
             return redirect()->route('bookedcarts')->with('success', 'BookedCart deleted successfully');
         } else {
             return redirect()->route('bookedcarts')->with('error', 'BookedCart not found');
         }
-    }
-    public function search(Request $request){
-        $query=$request->input('search');
-        $carts=Booking::where('title','LIKE',"%{$query}%")
-        ->orWhere('location','LIKE',"%{$query}%")
-        ->orWhere('username','LIKE',"%{$query}%")
-        ->paginate(6);
-        return view('admin.bookedcarts',compact('carts','query'));
     }
 }

@@ -8,8 +8,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{asset('assets/img/favicon.png')}}" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="{{asset('assets/img/l2.jfif')}}" rel="icon">
+  {{-- <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> --}}
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -57,26 +57,43 @@
           <li><a class="fs-5" href="{{url('home')}}" class="active">{{__('msg.home')}}</a></li>
           <li><a class="fs-5" href="{{url('cart')}}">{{__('msg.touristcart')}}</a></li>
           <li><a class="fs-5" href="{{url('mycart')}}">{{__('msg.mycart')}}</a></li>
-          <li class="dropdown fs-5"><a href="#"><span class="fs-5">{{__('msg.language')}}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a class="fs-5" href="{{ route('lang.switch', 'en') }}">
-                English
-                <img src="https://static.vecteezy.com/system/resources/previews/000/532/212/original/vector-united-states-of-america-flag-usa-flag-america-flag-background.jpg" alt="English" style="width: 40px; height: auto; margin-right: 2px;">
-                </a></li>
-              <li><a class="fs-5" href="{{ route('lang.switch', 'es') }}">Spanish
-                <img src="https://static.vecteezy.com/system/resources/previews/000/401/734/original/illustration-of-spain-flag-vector.jpg" alt="English" style="width: 40px; height: auto; margin-right: 2px;">
-                </a></li>
-              <li><a class="fs-5" href="{{ route('lang.switch', 'ar') }}">Arabic
-                <img src="https://wallpapercave.com/wp/wp4215855.jpg" alt="English" style="width: 40px; height: auto; margin-right: 2px;">
-            </a></li>
-            <li><a class="fs-5" href="{{ route('lang.switch', 'tamil') }}">தமிழ்
-                <img src="https://i.redd.it/flag-of-tamil-nadu-india-v0-un0lcwzewpr91.png?auto=webp&s=81a2afaaa1376c0a13d5564dc1f4036eeeb8c99f" alt="English" style="width: 40px; height: auto; margin-right: 2px;">
-            </a></li>
-            </ul>
+          <li class="dropdown fs-5">
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle fs-6" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span id="selectedLanguage"></span>
+                    <img id="selectedIcon" src="" alt="" style="width: 30px; height: auto;">
+                </button>
+                <ul class="dropdown-menu mt-5" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item fs-5 d-flex justify-content-between align-items-center" href="{{ route('lang.switch', 'en') }}" data-icon="https://static.vecteezy.com/system/resources/previews/000/532/212/original/vector-united-states-of-america-flag-usa-flag-america-flag-background.jpg" data-lang="English">
+                            English
+                            <img src="https://static.vecteezy.com/system/resources/previews/000/532/212/original/vector-united-states-of-america-flag-usa-flag-america-flag-background.jpg" alt="English" style="width: 30px; height: auto;">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item fs-5 d-flex justify-content-between align-items-center" href="{{ route('lang.switch', 'es') }}" data-icon="https://static.vecteezy.com/system/resources/previews/000/401/734/original/illustration-of-spain-flag-vector.jpg" data-lang="Spanish">
+                            Spanish
+                            <img src="https://static.vecteezy.com/system/resources/previews/000/401/734/original/illustration-of-spain-flag-vector.jpg" alt="Spanish" style="width: 30px; height: auto;">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item fs-5 d-flex justify-content-between align-items-center" href="{{ route('lang.switch', 'ar') }}" data-icon="https://wallpapercave.com/wp/wp4215855.jpg" data-lang="Arabic">
+                            Arabic
+                            <img src="https://wallpapercave.com/wp/wp4215855.jpg" alt="Arabic" style="width: 30px; height: auto;">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item fs-5 d-flex justify-content-between align-items-center" href="{{ route('lang.switch', 'tamil') }}" data-icon="https://i.redd.it/flag-of-tamil-nadu-india-v0-un0lcwzewpr91.png?auto=webp&s=81a2afaaa1376c0a13d5564dc1f4036eeeb8c99f" data-lang="தமிழ்">
+                            தமிழ்
+                            <img src="https://i.redd.it/flag-of-tamil-nadu-india-v0-un0lcwzewpr91.png?auto=webp&s=81a2afaaa1376c0a13d5564dc1f4036eeeb8c99f" alt="Tamil" style="width: 30px; height: auto;">
+                        </a>
+                    </li>
+                </ul>
+            </div>
           </li>
-          <li><a class="fs-5" href="{{url('profile')}}">{{__('msg.profile')}}</a></li>
+          <li><a class="fs-5" href="{{url('profile')}}">{{__('msg.profile')}}</a>
+        </li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       {{-- <a class="btn-getstarted fs-5" href="index.html#about">Get Started</a> --}}
@@ -90,5 +107,34 @@
   @endauth
     </div>
   </header>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const currentLocale = '{{ app()->getLocale() }}';
+      const iconMap = {
+          'en': 'https://static.vecteezy.com/system/resources/previews/000/532/212/original/vector-united-states-of-america-flag-usa-flag-america-flag-background.jpg',
+          'es': 'https://static.vecteezy.com/system/resources/previews/000/401/734/original/illustration-of-spain-flag-vector.jpg',
+          'ar': 'https://wallpapercave.com/wp/wp4215855.jpg',
+          'tamil': 'https://i.redd.it/flag-of-tamil-nadu-india-v0-un0lcwzewpr91.png?auto=webp&s=81a2afaaa1376c0a13d5564dc1f4036eeeb8c99f'
+      };
+      const languageMap = {
+          'en': '',
+          'es': '',
+          'ar': '',
+          'tamil': ''
+      };
+
+      const selectedIcon = document.getElementById('selectedIcon');
+      const selectedLanguage = document.getElementById('selectedLanguage');
+      selectedIcon.src = iconMap[currentLocale];
+      const dropdownItems = document.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(item => {
+          item.addEventListener('click', function (event) {
+              event.preventDefault();
+              selectedIcon.src = this.getAttribute('data-icon');
+              window.location.href = this.href;
+          });
+      });
+  });
+</script>
 </body>
 </html>

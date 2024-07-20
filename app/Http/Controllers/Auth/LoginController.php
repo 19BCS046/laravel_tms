@@ -39,9 +39,9 @@ class LoginController extends Controller
     }
     public function logout(Request $request){
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerate();
-        return redirect('/');
+        // $request->session()->invalidate();
+        // $request->session()->regenerate();
+        return view('includes.log_home');
         // return redirect()->route('mycart')->with('success','Booking Successful!');
 
     }

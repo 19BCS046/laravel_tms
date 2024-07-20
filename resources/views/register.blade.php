@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>PeruZ</title>
+  <link href="{{asset('assets/img/l2.jfif')}}" rel="icon">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -12,8 +13,8 @@
         font-size: 20px;
     }
     .form-check-input {
-            transform: scale(1.5); /* Increase checkbox size */
-            margin-top: 0.3rem; /* Adjust vertical alignment */
+            transform: scale(1.5);
+            margin-top: 0.3rem;
         }
 
 </style>

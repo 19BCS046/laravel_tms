@@ -18,7 +18,7 @@ class ForgotPasswordController extends Controller
     }
     public function submitForgotPasswordForm(Request $request){
         $request->validate([
-            'email'=>'required|email|exists:users'
+            'email'=>'required|email|exists:users,email'
         ]);
         $token=Str::random(64);
         DB::table('password_reset_tokens')
@@ -37,36 +37,25 @@ class ForgotPasswordController extends Controller
         return view('auth.forgotPasswordLink',['token'=>$token]);
     }
     public function submitResetPasswordForm(Request $request) {
-        // Validate the request inputs
         $request->validate([
             'email' => 'required|email|exists:users,email',
             'password' => 'required|min:8|confirmed',
             'password_confirmation' => 'required'
         ]);
-
-        // Retrieve the password reset request
         $password_reset_request = DB::table('password_reset_tokens')
             ->where('email', $request->input('email'))
             ->where('token', $request->token)
             ->first();
-
-        // Check if the password reset request exists and is valid
         if (!$password_reset_request) {
             return back()->with('error', 'Invalid token');
         }
-
-        // Update the user's password
         User::where('email', $request->input('email'))
             ->update([
                 'password' => Hash::make($request->input('password'))
             ]);
-
-        // Delete the password reset token
         DB::table('password_reset_tokens')
             ->where('email', $request->input('email'))
             ->delete();
-
-        // Redirect to the login page with a success message
         return redirect('/login')->with('message', 'Your password has been changed');
     }
 
