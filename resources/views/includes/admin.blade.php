@@ -23,7 +23,7 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="{{ url('dashboard') }}" class="sidebar-link">
+                    <a href="{{ url('admin') }}" class="sidebar-link">
                         <i class="lni lni-home"></i>
                         <span>{{__('msg.dashboard')}}</span>
                     </a>

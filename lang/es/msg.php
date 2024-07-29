@@ -48,7 +48,7 @@ return [
         'id' => 'Id',
         'package' => 'Paquete',
         'action' => 'Acción',
-        'user' => 'Usuario',
+        'user' => 'rol',
         'no' => 'No se encontraron resultados para',
         'username' => 'Nombre de usuario',
         'bookeddate' => 'Fecha/Hora de reserva',
@@ -72,5 +72,16 @@ return [
         'vehicletype'=>'Tipo de Vehículo',
         'nobook'=>'No se encontraron reservas',
         'booknow'=>'Reservar ahora',
+        'editadmin' => 'Editar Administrador',
+        'makeadmin' => 'Hacer Administrador o No',
+        'admin' => 'Administrador',
+        'notadmin' => 'No Administrador',
+        'updateadmin'=>'Actualizar administrador',
+        'editpassword' => 'Editar Contraseña',
+        'oldpassword' => 'Contraseña Antigua',
+        'newpassword' => 'Contraseña Nueva',
+        'confirmpassword' => 'Confirmar Contraseña',
+        'updatepassword' => 'Actualizar Contraseña',
+
     ];
 

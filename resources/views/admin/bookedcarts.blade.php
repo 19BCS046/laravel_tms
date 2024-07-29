@@ -23,6 +23,14 @@
                             <button class="btn btn-primary border-0 rounded-0" type="submit">{{ __('msg.search') }}</button>
                         </div>
                     </form>
+                    <div class="d-flex align-items-center">
+                        <select id="userpage" name="userpage" class="me-2 py-2">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row justify-content-center mt-4 mb-6">
@@ -63,7 +71,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 mt-3 p-2" id="paginationLinks">
-                                        {{-- Ajax --}}
+                        {{-- Pagination links will be inserted here --}}
                     </div>
                 </div>
             </div>
@@ -77,7 +85,8 @@
 <script src="{{ asset('assets/js/script.js') }}"></script>
 <script>
     $(document).ready(function () {
-        function fetchCartData(url = "{{ route('bookedcarts') }}") {
+        // Function to fetch cart data with pagination
+        function fetchCartData(url) {
             $.ajax({
                 type: "GET",
                 url: url,
@@ -122,6 +131,7 @@
                             `);
                         });
 
+                        // Update pagination links
                         $('#paginationLinks').html(response.links);
                     } else {
                         let tableBody = $('#cartTableBody');
@@ -135,20 +145,19 @@
             });
         }
 
-        fetchCartData();
+        // Initial data load
+        fetchCartData("{{ route('bookedcarts') }}");
+
+        // Search form submission
         $('#searchForm').submit(function (e) {
             e.preventDefault();
             let searchQuery = $('#searchInput').val().trim();
-            if (searchQuery !== '') {
-                let url = $(this).attr('action') + '?search=' + searchQuery;
-                fetchCartData(url);
-               console.log(fetchCartData(url));
-                $('#searchInput').val('');
-            } else {
-                console.log('Empty search query');
-            }
+            let url = $(this).attr('action') + '?search=' + searchQuery;
+            fetchCartData(url);
+            $('#searchInput').val('');
         });
 
+        // Pagination link click
         $(document).on('click', '.pagination a', function (e) {
             e.preventDefault();
             let url = $(this).attr('href');
@@ -156,6 +165,8 @@
                 fetchCartData(url);
             }
         });
+
+        // Delete button click
         $(document).on('click', '.delete-cart-btn', function () {
             const cartId = $(this).data('cart-id');
             const confirmation = confirm('Are you sure you want to delete this cart?');
@@ -166,6 +177,13 @@
             } else {
                 console.log('Deletion canceled.');
             }
+        });
+
+        // Page size change
+        $('#userpage').change(function () {
+            let perPage = $(this).val();
+            let url = "{{ route('bookedcarts') }}" + '?perPage=' + perPage;
+            fetchCartData(url);
         });
     });
 </script>

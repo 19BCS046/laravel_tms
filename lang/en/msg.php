@@ -49,7 +49,7 @@ return [
     'id'=>'Id',
     'package'=>'Package',
     'action'=>'Action',
-    'user'=>'User',
+    'user'=>'Role',
     'no'=>'No results found for',
     'username'=>'Username',
     'bookeddate'=>'Booked Date/Time',
@@ -73,11 +73,16 @@ return [
     'vehicletype'=>'Vehicle Type',
     'nobook'=>'No Bookings Found',
     'booknow'=>'Book Now',
-
-
-
-
-
+    'editadmin'=>'Edit Admin',
+    'makeadmin'=>'Make Admin or Not',
+    'admin'=>'Admin',
+    'notadmin'=>'Not Admin',
+    'updateadmin'=>'Update Admin',
+    'editpassword'=>'Edit Password',
+    'oldpassword'=>'Old Password',
+    'newpassword'=>'New Password',
+    'confirmpassword'=>'Confirm Password',
+    'updatepassword'=>'Update Password',
 
 
 ];

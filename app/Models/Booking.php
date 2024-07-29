@@ -9,7 +9,7 @@ class Booking extends Model
 {
     use HasFactory;
     protected $fillable = ['cart_id', 'user_id', 'status', 'title', 'location', 'username','cost'];
-    
+
     public function cart(){
         return $this->belongsTo(Cart::class);
     }

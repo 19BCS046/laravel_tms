@@ -37,10 +37,8 @@ class TouristCartController extends Controller
         ->take(10)
         ->get();
         return view('topplace',compact('places'));
-
     }
     public function book($id){
-
         $cart=Cart::find($id);
         $users = Auth::user();
         if($cart){

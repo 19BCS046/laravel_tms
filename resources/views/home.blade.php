@@ -1,7 +1,7 @@
 @include('includes.navbar')
  <section id="hero" class="section hero">
 
-      <div class="container">
+      <div class="container" style="height: 70vh;">
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
             <h1>{{__('msg.head')}}</h1>

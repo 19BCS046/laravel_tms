@@ -56,7 +56,7 @@
         <ul>
           <li><a class="fs-5" href="{{url('home')}}" class="active">{{__('msg.home')}}</a></li>
           <li><a class="fs-5" href="{{url('cart')}}">{{__('msg.touristcart')}}</a></li>
-          <li><a class="fs-5" href="{{url('mycart')}}">{{__('msg.mycart')}}</a></li>
+          <li><a class="fs-5" href="{{url('mycart')}}">{{__('msg.mybook')}}</a></li>
           <li class="dropdown fs-5">
             <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle fs-6" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

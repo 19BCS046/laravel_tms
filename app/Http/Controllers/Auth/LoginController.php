@@ -4,49 +4,48 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string|min:8'
-        ]);
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+       $user_admin = User::where('email', $email)->first();
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $user = Auth::user();
             $token = $user->createToken('AppName')->accessToken;
-          //  return response()->json($token,200);
-          if ($user->isAdmin()) {
-            return redirect()->intended('/admin')->with('success', 'Login successful as Admin!');
-        }
-            return redirect()->intended('/home')->with('success', 'Login successful!'); // Redirect to desired location after login
-        }
 
-        return redirect()->back()->with('error', 'Invalid credentials. Please try again.')->withInput();
+            if ($user_admin->admin == 1) {
+                return redirect()->intended('/admin')->with('success', 'Login successful as Admin!');
+            } elseif ($user_admin->admin == 0) {
+                return redirect()->intended('/home')->with('success', 'Login successful!');
+            } else {
+                return redirect()->back()->with('error', 'Invalid credentials. Please try again.')->withInput();
+            }
+        } else {
+            return redirect()->back()->with('error', 'Invalid credentials. Please try again.')->withInput();
+        }
     }
-    public function detail(){
-        $user=Auth::user();
-        $response['user']=$user;
-        return response()->json($response,200);
-    }
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         Auth::logout();
-        // $request->session()->invalidate();
-        // $request->session()->regenerate();
         return view('includes.log_home');
-        // return redirect()->route('mycart')->with('success','Booking Successful!');
-
     }
-    public function userDashboard(){
+
+    public function userDashboard()
+    {
         return view('/home');
     }
-}
 
+    public function unauthorization()
+    {
+        return view('includes.unauthorization');
+    }
+}

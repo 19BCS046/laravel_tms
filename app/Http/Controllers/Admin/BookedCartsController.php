@@ -13,25 +13,13 @@ class BookedCartsController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('search');
+        $perPage = $request->input('perPage', 6);
+
         $carts = Booking::where('username', 'LIKE', "%{$query}%")
-                    ->orWhere('title', 'LIKE', "%{$query}%")
-                    ->orWhere('location', 'LIKE', "%{$query}%")
-                    ->orWhere('status', 'LIKE', "%{$query}%")
-                    ->paginate(6);
-
-    if ($request->ajax()) {
-        return response()->json([
-            'data' => $carts->items(),
-            'links' => $carts->links()->toHtml(),
-        ]);
-    }
-        return view('admin.bookedcarts', compact('carts', 'query'));
-    }
-
-    // Booked cart table
-    public function bookedCart(Request $request)
-    {
-        $carts = Booking::paginate(6);
+                        ->orWhere('title', 'LIKE', "%{$query}%")
+                        ->orWhere('location', 'LIKE', "%{$query}%")
+                        ->orWhere('status', 'LIKE', "%{$query}%")
+                        ->paginate($perPage);
 
         if ($request->ajax()) {
             return response()->json([
@@ -39,6 +27,24 @@ class BookedCartsController extends Controller
                 'links' => $carts->links()->toHtml(),
             ]);
         }
+
+        return view('admin.bookedcarts', compact('carts', 'query'));
+    }
+
+    // Booked cart table
+    public function bookedCart(Request $request)
+    {
+        $perPage = $request->input('perPage', 6);
+
+        $carts = Booking::paginate($perPage);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $carts->items(),
+                'links' => $carts->links()->toHtml(),
+            ]);
+        }
+
         return view('admin.bookedcarts', compact('carts'));
     }
 
@@ -53,10 +59,10 @@ class BookedCartsController extends Controller
     public function deleteBookedCart($id)
     {
         $booking = Booking::find($id);
-        if ( $booking->delete()) {
-            return redirect()->route('bookedcarts')->with('success', 'BookedCart deleted successfully');
+        if ($booking && $booking->delete()) {
+            return redirect()->route('bookedcarts')->with('success', 'Booked cart deleted successfully');
         } else {
-            return redirect()->route('bookedcarts')->with('error', 'BookedCart not found');
+            return redirect()->route('bookedcarts')->with('error', 'Booked cart not found');
         }
     }
 }

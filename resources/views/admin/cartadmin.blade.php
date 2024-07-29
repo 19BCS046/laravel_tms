@@ -17,15 +17,23 @@
         <div class="mask d-flex align-items-center h-100">
             <div class="container" style="margin-top: 30px;">
                 <div class="navbar px-4 py-3 mb-0">
-                    <form id="searchForm" action="{{ route('searchadmin') }}" method="GET">
-                        <div class="input-group input-group-navbar">
-                            <input id="searchInput" type="text" class="form-control border-0 rounded-0 me-2 py-2" name="search" placeholder="{{ __('msg.search') }}...">
+                    <form id="searchForm" action="{{ route('searchadmin') }}" method="GET" class="d-flex flex-grow-1">
+                        <div class="input-group input-group-navbar me-3">
+                            <input id="searchInput" type="text" class="form-control border-0 rounded-0 me-2 py-2 " name="search" placeholder="{{ __('msg.search') }}..." style="max-width: 200px;">
                             <button class="btn btn-primary border-0 rounded-0" type="submit">{{ __('msg.search') }}</button>
                         </div>
                     </form>
-                    <form action="{{ route('addnewcart') }}" method="GET" class="ms-2">
-                        <button class="btn btn-primary border-0 rounded-0 py-2 me-2" type="submit">{{ __('msg.addnewcart') }}</button>
-                    </form>
+                    <div class="d-flex align-items-center">
+                        <select id="userpage" name="userpage" class="me-2 py-2">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                        <form action="{{ route('addnewcart') }}" method="GET">
+                            <button class="btn btn-primary border-0 rounded-0 py-2" type="submit">{{ __('msg.addnewcart') }}</button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="row justify-content-center mt-4 mb-6">
@@ -77,110 +85,116 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-<script src="{{ asset('assets/js/script.js') }}"></script>
 <script>
     $(document).ready(function () {
-    function fetchCartData(url = "{{ route('cartadmin') }}") {
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (response) {
-                if (response && response.data.length > 0) {
-                    let carts = response.data;
-                    let tableBody = $('#cartTableBody');
-                    tableBody.empty();
-                    let i=1 
-                    carts.forEach(function (cart) {
-                        tableBody.append(`
-                            <tr class="fs-5">
-                                <td>${i++}</td>
-                                <td>${cart.title}</td>
-                                <td>${cart.location}</td>
-                                <td>${cart.cost}</td>
-                                <td>${cart.vehicle}</td>
-                                <td>${cart.from}</td>
-                                <td>${cart.to}</td>
-                                <td>
-                                    <ul class="d-flex flex-row list-unstyled mb-0">
-                                        <li class="me-2">
-                                            <form action="/viewcart/${cart.id}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-light">
-                                                    <img class="img-fluid" src="https://icon-library.com/images/view-icon-png/view-icon-png-22.jpg" style="height: 25px; width: 25px;" alt="">
-                                                </button>
-                                            </form>
-                                        </li>
-                                        <li class="me-2">
-                                            <form action="/editdata/${cart.id}" method="GET">
-                                                @csrf
-                                                <button type="submit" class="btn btn-light">
-                                                    <img class="img-fluid" src="https://th.bing.com/th/id/OIP.d1sTN41laBxAg-Uy_pXvmgHaHx?rs=1&pid=ImgDetMain" style="height: 25px; width: 25px;" alt="">
-                                                </button>
-                                            </form>
-                                        </li>
-                                        <li>
-                                            <form action="/deleteCart/${cart.id}" method="GET" id="deleteForm_${cart.id}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-light delete-cart-btn" data-cart-id="${cart.id}">
-                                                    <img class="img-fluid" src="https://th.bing.com/th/id/R.877e3e61916ea6657325deab2b04c926?rik=sA2hUAuRYAlGRw&pid=ImgRaw&r=0" style="height: 25px; width: 25px;" alt="Delete">
-                                                </button>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        `);
-                    });
+        let currentPage = 1;
+        let itemsPerPage = $('#userpage').val();
 
-                    $('#paginationLinks').html(response.links);
-                } else {
-                    let tableBody = $('#cartTableBody');
-                    tableBody.html('<tr><td colspan="9" class="text-center">No carts found.</td></tr>');
-                    $('#paginationLinks').empty();
+        function fetchCartData(url = "{{ route('cartadmin') }}") {
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: {
+                    page: currentPage,
+                    userpage: itemsPerPage,
+                },
+                success: function (response) {
+                    if (response && response.data.length > 0) {
+                        let carts = response.data;
+                        let tableBody = $('#cartTableBody');
+                        tableBody.empty();
+                        let i = (currentPage - 1) * itemsPerPage + 1;
+                        carts.forEach(function (cart) {
+                            tableBody.append(`
+                                <tr class="fs-5">
+                                    <td>${i++}</td>
+                                    <td>${cart.title}</td>
+                                    <td>${cart.location}</td>
+                                    <td>${cart.cost}</td>
+                                    <td>${cart.vehicle}</td>
+                                    <td>${cart.from}</td>
+                                    <td>${cart.to}</td>
+                                    <td>
+                                        <ul class="d-flex flex-row list-unstyled mb-0">
+                                            <li class="me-2">
+                                                <form action="/viewcart/${cart.id}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-light">
+                                                        <img class="img-fluid" src="https://icon-library.com/images/view-icon-png/view-icon-png-22.jpg" style="height: 25px; width: 25px;" alt="">
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li class="me-2">
+                                                <form action="/editdata/${cart.id}" method="GET">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-light">
+                                                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.d1sTN41laBxAg-Uy_pXvmgHaHx?rs=1&pid=ImgDetMain" style="height: 25px; width: 25px;" alt="">
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="/deleteCart/${cart.id}" method="GET" id="deleteForm_${cart.id}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-light delete-cart-btn" data-cart-id="${cart.id}">
+                                                        <img class="img-fluid" src="https://th.bing.com/th/id/R.877e3e61916ea6657325deab2b04c926?rik=sA2hUAuRYAlGRw&pid=ImgRaw&r=0" style="height: 25px; width: 25px;" alt="Delete">
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            `);
+                        });
+
+                        $('#paginationLinks').html(response.links);
+                    } else {
+                        let tableBody = $('#cartTableBody');
+                        tableBody.html('<tr><td colspan="8" class="text-center">No carts found.</td></tr>');
+                        $('#paginationLinks').empty();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
+            });
+        }
 
-    fetchCartData();
+        fetchCartData();
 
-    $('#searchForm').submit(function (e) {
-        e.preventDefault();
-        let searchQuery = $('#searchInput').val().trim();
-        if (searchQuery !== '') {
+        $('#searchForm').submit(function (e) {
+            e.preventDefault();
+            let searchQuery = $('#searchInput').val().trim();
             let url = $(this).attr('action') + '?search=' + searchQuery;
             fetchCartData(url);
             $('#searchInput').val('');
-        } else {
-            console.log('Empty search query');
-        }
-    });
+        });
 
-    $(document).on('click', '.pagination a', function (e) {
-        e.preventDefault();
-        let url = $(this).attr('href');
-        if (url) {
+        $('#userpage').change(function () {
+            itemsPerPage = $(this).val();
+            fetchCartData();
+        });
+
+        $(document).on('click', '.pagination a', function (e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            let page = new URL(url).searchParams.get('page');
+            currentPage = page;
             fetchCartData(url);
-        }
+        });
+
+        $(document).on('click', '.delete-cart-btn', function () {
+            const cartId = $(this).data('cart-id');
+            const confirmation = confirm('Are you sure you want to delete this cart?');
+
+            if (confirmation) {
+                const form = $('#deleteForm_' + cartId);
+                form.submit();
+            } else {
+                console.log('Deletion canceled.');
+            }
+        });
     });
-
-    $(document).on('click', '.delete-cart-btn', function () {
-        const cartId = $(this).data('cart-id');
-        const confirmation = confirm('Are you sure you want to delete this cart?');
-
-        if (confirmation) {
-            const form = $('#deleteForm_' + cartId);
-            form.submit();
-        } else {
-            console.log('Deletion canceled.');
-        }
-    });
-});
-
 </script>
 </body>
 </html>

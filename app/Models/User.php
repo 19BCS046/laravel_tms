@@ -44,13 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function isAdmin()
-    {
-        $adminEmails = [
-            'perumalshanmugam2002@gmail.com',
-            'sampleperu125@gmail.com'
-        ];
-
-        return in_array($this->email, $adminEmails);
-    }
+    // public function isAdmin()
+    // {
+    //     $adminEmails = [
+    //         'perumalshanmugam2002@gmail.com',
+    //         'sampleperu125@gmail.com'
+    //     ];
+    //     return in_array($this->email, $adminEmails);
+    // }
 }

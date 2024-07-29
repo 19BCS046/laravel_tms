@@ -9,7 +9,7 @@
 </head>
 <style>
       body {
-            height: 100vh; /* Ensure full viewport height */
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
