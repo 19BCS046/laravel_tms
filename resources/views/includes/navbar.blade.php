@@ -23,16 +23,8 @@
   <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
   <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
-  <!-- Main CSS File -->
   <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Ninestars
-  * Template URL: https://bootstrapmade.com/ninestars-free-bootstrap-3-theme-for-creative/
-  * Updated: Jun 14 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
   <style>
     .navmenu{
         font-size: 20px;
@@ -47,8 +39,7 @@
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+
         <h1 class="sitename">{{__('msg.logo')}}</h1>
       </a>
 
@@ -96,7 +87,6 @@
         </ul>
       </nav>
 
-      {{-- <a class="btn-getstarted fs-5" href="index.html#about">Get Started</a> --}}
       @auth
       <form id="logout-form" action="{{ route('logout') }}" method="POST">
           @csrf

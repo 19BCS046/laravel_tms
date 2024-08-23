@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Cart extends Model
 {
@@ -21,9 +22,9 @@ class Cart extends Model
         'to',
         'overview'
     ];
-    public function bookings()
+    public function bookings(): BelongsToMany
     {
-        return $this->hasMany(Booking::class);
+        return $this->belongsToMany(User::class, 'cart_users', 'touristcart_id', 'log_id');
     }
 
 }

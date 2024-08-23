@@ -100,16 +100,16 @@
                             tableBody.append(`
                                 <tr class="fs-5">
                                     <td>${i++}</td>
-                                    <td>${cart.username}</td>
-                                    <td>${cart.title}</td>
-                                    <td>${cart.location}</td>
-                                    <td>${cart.cost}</td>
+                                    <td>${cart.user.name}</td>
+                                    <td>${cart.cart.title}</td>
+                                    <td>${cart.cart.location}</td>
+                                    <td>${cart.cart.cost}</td>
                                     <td>${cart.created_at}</td>
-                                    <td>${cart.status}</td>
+                                    <td>Booked</td>
                                     <td>
                                         <ul class="d-flex flex-row list-unstyled mb-0">
                                             <li class="me-2">
-                                                <form action="/bookedcartdetail/${cart.cart_id}" method="POST">
+                                                <form action="/bookedcartdetail/${cart.cart.id}" method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-light">
                                                         <img class="img-fluid" src="https://icon-library.com/images/view-icon-png/view-icon-png-22.jpg" style="height: 25px; width: 25px;" alt="">

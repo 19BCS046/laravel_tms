@@ -16,27 +16,28 @@
             </div>
         @endif
         @if($bookings->isEmpty())
-            <p>{{__('msg.nobook')}}.</p>
-        @else
-            <div class="row">
-                @foreach($bookings as $booking)
-                    <div class="col-md-4 mb-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="{{ asset('assets/img/ooty.jpg') }}" class="card-img-top" alt="{{ $booking->cart->title }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $booking->cart->title }}</h5>
-                                <p class="card-text"><i class="bi bi-geo-alt-fill"></i> {{ $booking->cart->location }}</p>
-                                <p class="card-text">{{__('msg.from')}}: {{ $booking->cart->from }} {{__('msg.to')}}: {{ $booking->cart->to }}</p>
-                                <p class="card-text">{{__('msg.vehicletype')}}: {{ $booking->cart->vehicle }}</p>
-                                <p class="card-text">{{__('msg.rating')}}: {{ $booking->cart->rating }}/5</p>
-                                <p class="card-text">{{__('msg.package')}}: &#8377; {{ $booking->cart->cost }}</p>
-                                <p class="card-text">{{ $booking->cart->overview }}</p>
-                            </div>
+        <p>{{__('msg.nobook')}}.</p>
+    @else
+        <div class="row">
+            @foreach($bookings as $booking)
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ asset('assets/img/ooty.jpg') }}" class="card-img-top" alt="{{ $booking->cart->title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $booking->cart->title }}</h5>
+                            <p class="card-text"><i class="bi bi-geo-alt-fill"></i> {{ $booking->cart->location }}</p>
+                            <p class="card-text">{{__('msg.from')}}: {{ $booking->cart->from }} {{__('msg.to')}}: {{ $booking->cart->to }}</p>
+                            <p class="card-text">{{__('msg.vehicletype')}}: {{ $booking->cart->vehicle }}</p>
+                            <p class="card-text">{{__('msg.rating')}}: {{ $booking->cart->rating }}/5</p>
+                            <p class="card-text">{{__('msg.package')}}: &#8377; {{ $booking->cart->cost }}</p>
+                            <p class="card-text">{{ $booking->cart->overview }}</p>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        @endif
+                </div>
+            @endforeach
+        </div>
+    @endif
+
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

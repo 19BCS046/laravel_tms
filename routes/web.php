@@ -10,6 +10,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\TouristCartController;
+use App\Models\Cart;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -17,6 +20,7 @@ use Illuminate\Support\Facades\Session;
 Route::get('/', function () {
     return view('includes.log_home');
 });
+//Unauthorization -user,admin
 Route::get('unauthorization', [LoginController::class, 'unauthorization'])->name('unauthorization');
 
 // Authentication routes
@@ -63,6 +67,22 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //change Password
     Route::post('/updatepassword', [ProfileController::class, 'updatePassword'])->name('updatepassword');
+    Route::get('/relationship', function() {
+        $user = User::findOrFail(1);
+       //  $users=DB::table('users')->Where('id',1)->first();
+       // dd($users);
+     //   dd($user);
+        $carts = $user->cart;  // Accessing the carts relationship
+      //  dd($carts);
+        $cart=Cart::find(4);
+        $users=$cart->bookings;
+        $names = $users->map(function ($user) {
+            return $user->name;
+        });
+        dd($names);
+
+
+    });
 
 });
 
@@ -110,7 +130,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('searchbookedcart', [BookedCartsController::class, 'search'])->name('searchbookedcart');
     Route::post('bookedcartdetail/{id}', [BookedCartsController::class, 'bookedCartDetails'])->name('bookedcartdetail');
 
-
     //delete the booked cart
     Route::get('deletebookedcart/{id}', [BookedCartsController::class, 'deleteBookedCart'])->name('deletebookedcart');
+
+    //download csv file
+    Route::post('/downloadusers', [UserController::class, 'downloadUsers'])->name('download.users');
 });

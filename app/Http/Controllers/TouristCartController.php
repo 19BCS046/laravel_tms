@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Jobs\RegisterEmailJob;
 use App\Models\Cart;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\User;
+use App\Models\CartUser;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,6 +46,11 @@ class TouristCartController extends Controller
         $cart=Cart::find($id);
         $users = Auth::user();
         if($cart){
+            CartUser::create([
+                'log_id'=>auth()->id(),
+                'touristcart_id'=>$cart->id,
+            ]);
+
             Booking::create([
                 'cart_id'=>$cart->id,
                 'user_id'=>auth()->id(),
@@ -52,17 +61,27 @@ class TouristCartController extends Controller
                 'cost'=>$cart->cost,
             ]);
             $user=User::find(auth()->id());
-            Mail::send('email.cartbook', [], function($message) use($user)  {
-                $message->to($user->email);
-                $message->subject('Successfully Booked Your Tourist Plan');
-            });
+            // Mail::send('email.cartbook', [], function($message) use($user)  {
+            //     $message->to($user->email);
+            //     $message->subject('Successfully Booked Your Tourist Plan');
+            // });
+           RegisterEmailJob::dispatch($user);
+
             return redirect()->route('mycart')->with('success','Booking Successful!');
         }
         return redirect()->route('cartdetails')->with('error','Booking failed.Cart not found');
     }
     public function mycart(){
-        $bookings=Booking::where('user_id',auth()->id())->get();
-        return view('mycart',compact('bookings'));
+        $bookings = CartUser::with('cart', 'user')
+            ->where('log_id', auth()->id())
+            ->get();
+        return view('mycart', compact('bookings'));
     }
+
+
+    // public function mycart(){
+    //     $bookings=Booking::where('user_id',auth()->id())->get();
+    //     return view('mycart',compact('bookings'));
+    // }
 }
 

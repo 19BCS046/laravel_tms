@@ -12,8 +12,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-@include('includes.admin')
-<section class="intro">
+    @include('includes.admin')
+    <section class="intro">
     <div class="bg-image h-100" style="background-color: #f5f7fa;">
         <div class="mask d-flex align-items-center h-100">
             <div class="container" style="margin-top: 30px;">
@@ -32,6 +32,11 @@
                             <option value="20">20</option>
                         </select>
                     </div>
+                    <!-- Print Users Button Form -->
+                    <form action="{{ route('download.users') }}" method="POST" class="ms-auto">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Download Csv</button>
+                    </form>
                 </div>
 
                 <div class="row justify-content-center mt-4 mb-6">
@@ -134,7 +139,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-light delete-user-btn" data-user-id="${user.id}">
-                                                        <img class="img-fluid" src="https://th.bing.com/th/id/R.877e3e61916ea6657325deab2b04c926?rik=sA2hUAuRYAlGRw&pid=ImgRaw&r=0" style="height: 25px; width: 20px;" alt="Delete">
+                                                        <img class="img-fluid" src="https://th.bing.com/th/id/R.877e3e61916ea6657325deab2b04c926?rik=sA2hUAuRYAlGRw&pid=ImgRaw&r=0" style="height: 20px; width: 20px;" alt="Delete">
                                                     </button>
                                                 </form>
                                             </li>

@@ -1,10 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\PrintUsersJob;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -85,5 +86,10 @@ class UserController extends Controller
         }
 
         return view('admin.user', compact('users'));
+    }
+    public function downloadUsers()
+    {
+        PrintUsersJob::dispatch();
+        return back()->with('success', 'CSV file downloaded successfully');
     }
 }

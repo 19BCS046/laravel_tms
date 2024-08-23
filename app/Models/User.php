@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -52,4 +53,9 @@ class User extends Authenticatable
     //     ];
     //     return in_array($this->email, $adminEmails);
     // }
+
+    public function cart(): BelongsToMany
+    {
+        return $this->belongsToMany(Cart::class, 'cart_users', 'log_id', 'touristcart_id');
+    }
 }
