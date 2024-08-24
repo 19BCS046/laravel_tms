@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookedCartsController;
 use App\Http\Controllers\Admin\CartadminController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FileDownloadController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -15,6 +16,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Psy\VersionUpdater\Downloader\FileDownloader;
 
 // Opening page
 Route::get('/', function () {
@@ -134,5 +136,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('deletebookedcart/{id}', [BookedCartsController::class, 'deleteBookedCart'])->name('deletebookedcart');
 
     //download csv file
-    Route::post('/downloadusers', [UserController::class, 'downloadUsers'])->name('download.users');
+    Route::get('/downloadusers', [UserController::class, 'downloadUsers'])->name('download.users');
+    
 });
